@@ -5,8 +5,8 @@ import 'package:mongo_dart/mongo_dart.dart' as mgo;
 
 Future<List<int>> getIds(mgo.Db db) async {
   return await (await db
-      .collection("data_weath_cur")
-      .find(mgo.where.fields(["id"])))
+          .collection("data_weath_cur")
+          .find(mgo.where.fields(["id"])))
       .map((m) => m["id"])
       .cast<int>()
       .toList();
@@ -18,8 +18,8 @@ Future<void> cacheCurrent(mgo.Db db, OpenWeatherApi api) async {
   for (int id in ids) {
     try {
       final data =
-      (await api.byId(id.toString(), unit: TemperatureUnit.celsius))
-          .simplified();
+          (await api.byId(id.toString(), unit: TemperatureUnit.celsius))
+              .simplified();
       final up = mgo.modify;
       final map = simple.Weather.serializer.toMap(data);
       map.forEach((k, v) {
